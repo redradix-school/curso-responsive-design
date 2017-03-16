@@ -1,0 +1,149 @@
+/* LAYOUT */
+
+html {
+  font-size: 100%;
+
+  @include media-query(lap-and-up) {
+    font-size: 125%;
+  }
+
+}
+
+
+    body {
+      background: $grayDark;
+      color: $text;
+      font-family: $font;
+      line-height: normal;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+      .wrapper {
+        width: 90%;
+        max-width: $l-maxWidth;
+        margin: 0 auto;
+        padding: 0;
+      }
+
+      .main-content {
+        @include remSize('padding', $pad);
+        background-color: $gray;
+      }
+
+/* FIXED HEADER AND FOOTER LAYOUT */
+    body{
+      @include position(absolute, 0, 0, 0 ,0);
+      overflow: hidden;
+
+    }
+
+
+    .main-footer {
+      @include remSize('height', 80);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .main-content {
+      @include remSize('top', 50);
+      @include remSize('bottom', 80);
+      overflow-y: auto;
+      width: 100%;
+      position: absolute;
+    }
+
+
+
+/* Grid Container */
+.g {
+  font-size: 0;
+  /* In order to use columns with display: inline-block; and avoid that annoying whitespae bettwen blocks that ruins your grid */
+
+  > * {
+    //letter-spacing: normal;
+    @include font-size($font-base); /* You need to reset font-size: 0; from the grid container */
+  }
+
+  .g {
+    font-size: 0;
+  }
+}
+
+/* Grid Item */
+.gi {
+  @include media-query(lap-and-up){
+    display: inline-block;
+    vertical-align: top;
+
+  }
+}
+
+
+  /* Container */
+
+      .row {
+        @include clearfix;
+        @include box-shadow(0 5px 0 $grayDark);
+        background-color: $gray;
+      }
+
+
+  /* Cols */
+      .column {
+        @include transition(all 0.3s ease);
+        @include remSize('padding', 20);
+        @include remSize('margin-bottom', 15);
+        color: $white;
+      }
+
+        .column img {
+          width: 100%;
+        }
+
+
+
+
+@include media-query(lap-and-up) {
+  /* Content */
+  .main-content {
+    @include remSize('top', 180);
+    @include remSize('padding', $padTwice $pad );
+
+  }
+    .column, .half {
+      float: left;
+      width: 50%;
+      }
+
+      .half-full {
+        width: 100%;
+      }
+}
+
+@include media-query(desk) {
+/* Content */
+  .main-content {
+    background: #f2f2f2;
+  }
+
+  .row {
+    background-color: #f2f2f2;
+    -webkit-box-shadow: 0 5px 0 #dddddd;
+    -moz-box-shadow: 0 5px 0 #dddddd;
+    box-shadow: 0 5px 0 #dddddd;
+  }
+
+  .column {
+    color: #2D2D2D;
+    width: 25%;
+  }
+
+    .half-full {
+      width: 50%;
+      margin-right: 50%;
+    }
+}
+

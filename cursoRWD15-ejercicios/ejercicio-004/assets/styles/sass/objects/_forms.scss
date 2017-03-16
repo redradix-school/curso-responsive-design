@@ -1,0 +1,134 @@
+/* Forms */
+
+
+  /* Common form items */
+
+  form {
+    margin: 0;
+  }
+
+  fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  button,
+  input,
+  textarea {
+    -webkit-appearance: none;
+  }
+
+  button[disabled],
+  input[disabled] {
+    cursor: default;
+  }
+
+  textarea {
+    overflow: auto;
+    vertical-align: top;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: 100%;
+  }
+
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: auto;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  input[type="search"],
+  input[type="email"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="date"],
+  input[type="month"],
+  input[type="week"],
+  input[type="time"],
+  input[type="datetime"],
+  input[type="datetime-local"],
+  .input-field,
+  select,
+  .select,
+  textarea {
+    @include remSize('height', 36);
+    @include remSize('padding', 0 $padHalf);
+    @include font-size(14);
+    background-color: $white;
+    color: $text;
+    border: 1px solid darken($grayUltraLight, 7%);
+    line-height: 1;
+  }
+
+
+
+/* Form Layout */
+    .form-group {
+      @include remSize('margin-bottom', $pad);
+
+      .form-label {
+        @include remSize('margin-bottom', $padHalf);
+        display: block;
+        font-weight: $bold;
+      }
+
+      .form-control {
+        width: 100%;
+      }
+
+      .form-info {
+        @include remSize('padding', $padHalf);
+        @include font-size(12);
+        font-style: italic;
+        margin: 0;
+      }
+
+      &.form-actions {
+        @include inline-block-fix;
+        @include clearfix;
+        width: 100%;
+        text-align: center;
+      }
+
+      &.form-actions .btn {
+        @include remSize('margin', 0 $padHalf $padHalf);
+        @include font-size(16);
+        display: inline-block;
+        vertical-align: top;
+      }
+
+    }
+
+@include media-query(lap-and-up) {
+
+    .form-wrapper {
+      @include inline-block-fix;
+
+    .form-group {
+      @include remSize('padding', $padHalf);
+      display: inline-block;
+    }
+
+  }
+
+}
+
+@include media-query(desk) {
+  .form-wrapper {
+    @include remSize('padding', $padHalf);
+    background: darken($grayUltraLight, 4%);
+  }
+}

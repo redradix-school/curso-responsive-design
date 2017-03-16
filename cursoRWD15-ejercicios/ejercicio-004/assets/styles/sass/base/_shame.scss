@@ -1,0 +1,44 @@
+
+/* SHAME */
+// all the CSS declarations, hacks and
+// things we are not proud of.
+// Some day they must dissapear from the code.
+
+
+//PRUEBAS
+
+.test {
+  @extend %shoggoth;
+}
+
+
+//HACKS
+
+
+/* Fix for Chrome yellow background in autocompleted-autofilled fields */
+input:-webkit-autofill {
+  box-shadow: 0 1px 2px rgba($black, 0.5), 0 0 0 500px $grayUltraLight inset;
+  -webkit-text-fill-color: $text;
+
+  &:hover {
+    box-shadow: 0 1px 3px -1px #000, 0 0 0 500px $grayUltraLight inset;
+  }
+
+  &:focus, &:active {
+    box-shadow: 0 1px 5px rgba($black, 0.5) inset, 0 0 0 500px white inset;
+    -webkit-text-fill-color: $text;
+  }
+
+
+
+  &.is-invalid {
+    -webkit-text-fill-color: $error;
+    box-shadow: 0 1px 5px rgba($error, 0.5) inset, 0 0 0 500px white inset;
+  }
+
+}
+
+
+/* Fix for Chrome blue field outline */
+textarea, input, *:focus { outline: none !important; }
+

@@ -1,0 +1,35 @@
+/* Buttons */
+
+  .btn {
+    @include border-radius(10px);
+    @include remSize('padding', 12);
+    @include transition(all linear 0.3s);
+    text-decoration: none;
+    cursor: pointer;
+    border: 0 none;
+    background: $gray;
+    color: $grayDark;
+    display: inline-block;
+    text-decoration: none;
+
+    &.ok {
+      color: $white;
+      background-color: $success;
+    }
+
+    &.cancel {
+      color: $white;
+      background: $error;
+    }
+
+    &:hover {
+      @include scale(1.2);
+      background: $grayLight;
+      color: $white;
+    }
+
+    &:active {
+      @include box-shadow(0 4px 4px $black inset);
+    }
+
+  }

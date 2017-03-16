@@ -1,0 +1,109 @@
+/*------------------------------------*\
+    $BASE
+\*------------------------------------*/
+
+
+/* Tipos */
+
+@include font-face('Raleway', 'raleway-regular-webfont', normal);
+@include font-face('Raleway', 'raleway-bold-webfont', normal);
+@include font-face('appIcons', 'limbikIcons.v2.4', normal);
+
+/* Global */
+
+html{
+  font-size: $document-font-size-down; // 14
+  height: 100%;
+
+  @include media-query(lap-and-up) {
+    font-size: $document-font-size; // 16
+  }
+
+
+}
+
+body{
+  color: $text;
+  font-family: $font;
+  font-size: 100%;
+  line-height: $base-lineHeight;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  background-color: $baseBg;
+}
+
+
+
+/* Block Content */
+
+h1,h2,h2,h3,h4,h6{
+  @include remSize('margin-bottom', $pad);
+  font-size: 1em;
+  font-weight: $bold;
+  color: $text;
+}
+
+p{
+  @include remSize('margin-bottom', $padTwice);
+}
+
+
+
+/* Tabulated content */
+
+td, th {
+  text-align: left;
+}
+
+em, i {
+  //font-family: $fontAlternate;
+}
+
+/* Inline Content */
+
+
+/* LINKS */
+a{
+  outline: 0 none;
+  color: $link;
+  text-decoration: underline;
+
+  &:visited {
+    //NO more styling than color...
+    //https://hacks.mozilla.org/2010/03/privacy-related-changes-coming-to-css-vistited/
+    //text-decoration: underline;
+    // color: $linkVisited;
+    //border-bottom: 1px dashed $linkVisited;
+  }
+
+  &:hover {
+    color: $linkHover;
+    outline: none;
+    //border-bottom: 1px solid $link;
+    text-decoration: underline;
+  }
+}
+
+
+
+
+/* Helpers */
+.reader-only {
+  @extend %reader-only;
+}
+
+.align-right  {
+  text-align: right;
+}
+.align-center  {
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+
+

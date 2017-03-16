@@ -1,0 +1,14 @@
+/* Footer */
+
+  .main-footer {
+    @include remSize('padding', $pad);
+
+  }
+
+
+  @include media-query(lap-and-up) {
+  /* Footer */
+    .main-footer {
+      text-align: center;
+    }
+  }

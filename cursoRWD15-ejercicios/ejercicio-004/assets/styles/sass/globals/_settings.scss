@@ -1,0 +1,149 @@
+
+//***************************************
+//    $VARIABLES
+//***************************************
+
+  // -------------------------------------
+  //   Colors
+  // -------------------------------------
+
+
+  // ** Primary **
+  $primary        : #37B5CD;
+  $primaryDark    : #2C96AA;
+  $primaryLight   : #7ACBDA;
+
+  $primaryPalm    : #91040D;
+  $primaryDesk    : #bf0411;
+
+  // ** Secondary **
+  $secondary      : #CF603F;
+  $secondaryDark  : #BA5638;
+  $secondaryLight : #D48972;
+
+  // ** Grayscale **
+  $black          : #000000;
+  $white          : #ffffff;
+  $gray           : #373737;
+  $grayDark       : #2D2D2D;
+  $grayLight      : #8B8B8B;
+  $grayUltraLight : #F2F2F2;
+
+
+  // ** Backgrounds **
+  $baseBg         : $grayDark;
+  $alternateBg    : lighten($gray, 70%);
+
+
+  // ** Texts **
+  $text           : $grayLight;
+  $textDark       : $grayDark;
+  $textLight      : $white;
+
+
+  // ** Statuses **
+  $error          : #bf0411;      //red
+  $success        : #009045;      //green
+  $info           : #1AACF4;      //light blue
+  $warning        : #F4C427;      //yellow
+
+
+  // ** States **
+  $link           : $primary;
+  $linkHover      : $primaryDark;
+  // $linkActive  : $primaryDark;
+
+
+
+
+  // -------------------------------------
+  //   Fonts
+  // -------------------------------------
+
+  $font               : 'Raleway', Helvetica, Arial, sans-serif;
+  $codeFont           : "Courier New", Courier, monospace;
+
+  $base-lineHeight    : normal;
+
+  $light              : 300;
+  $normal             : 400;
+  $medium             : 500;
+  $semibold           : 600;
+  $bold               : 700;
+
+  $font-base          : 16;
+  $font-base-down     : 14;
+
+  $document-font-size : ($font-base / 16) * 100%; //16
+  $document-font-size-down : ($font-base-down / 16) * 100%; //14
+
+
+  // Extended font sizes
+
+  // $font_size_zeta         : 14;     // h6
+  // $font_size_epsilon      : 16;     // h5
+  // $font_size_delta        : 18;     // h4
+  // $font_size_gamma        : 20;     // h3
+  // $font_size_beta         : 24;     // h2
+  // $font_size_alpha        : 28;     // h1
+
+  // $font_size_kilo         : 30;     // extra-large
+  // $font_size_mega         : 38;     // extra-Xlarge
+  // $font_size_giga         : 46;     // jumbotronik
+
+
+  // -------------------------------------
+  //   Rythm                : Margins & Paddings
+  // -------------------------------------
+  $pad                      : 14;
+  $padHalf                  : 7;
+  $padTwice                 : 28;
+
+
+  // -------------------------------------
+  //   Layout
+  // -------------------------------------
+
+  $l-maxWidth               : 960;
+
+  $base-whitespace          : 1em;
+
+
+
+  // -------------------------------------
+  //   Breakpoints
+  // -------------------------------------
+
+  // palm: for handheld devices
+  // lap: for tablets and netbooks and the like
+  // portable: for both of the above
+  // desk: for anything big enough to be deemed stationary
+
+
+  $lap-start: 640;
+  $desk-start: 970;
+  $desk-wide-start: 1140;
+
+  $palm-tiny-end: 320;
+  $palm-end: $lap-start - 0.01;
+  $lap-end:  $desk-start - 0.01;
+
+  // -------------------------------------
+  // Video Breakpoints
+  // -------------------------------------
+
+  // 16:9 Youtube recommended sizes
+  // 2160p: 3840 x 2160
+  // 1440p: 2560 x 1440
+  // 1080p: 1920 x 1080
+  // 720p: 1280 x 720
+  // 480p: 854 x 480
+  // 360p: 640 x 360
+  // 240p: 426 x 240
+
+$video-huge      : 1280;
+$video-big       : 854;
+$video-med       : 640;
+$video-small     : 426;
+
+

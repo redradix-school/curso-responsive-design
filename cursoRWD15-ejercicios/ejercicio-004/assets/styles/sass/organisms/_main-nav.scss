@@ -1,0 +1,81 @@
+/* Main Nav */
+
+
+/* Hidden Menu for small devices */
+.main-nav {
+  @include position(absolute, 0, 0, 0, 0);
+  @include remSize('right', 64);
+  @include opacity(0);
+  background: $white;
+  z-index: 666;
+  @include transform(translateX(-200%));
+
+
+  .btn {
+    @include font-size($font_base * 2);
+    color: $primary;
+    width: 100%;
+    display: inline-block;
+    transform: none;
+    border-bottom: 1px solid $grayLight;
+    border-radius: 0;
+    text-decoration: none;
+  }
+
+  .menu-is-shown & {
+    @include opacity(1);
+    @include transition(all linear 0.3s);
+    @include transform(translateX(0));
+    @include box-shadow(20px 0 20px -10px rgba(0,0,0, 0.6));
+    margin-left: 0;
+  }
+
+}
+
+
+
+
+/* Media Queries */
+@include media-query(lap-and-up) {
+  .main-nav {
+    @include opacity(1);
+    @include clearfix;
+    float: right;
+    display: block;
+    position: static;
+    transform: none;
+    transition: none;
+    background: transparent;
+
+    .btn {
+      @include font-size($font_base);
+      width: auto;
+      display: inline;
+      background-color: $primaryDesk;
+      border-radius: 0;
+      color: $white;
+      border-bottom: 0 none;
+
+      &:hover {
+        background-color: lighten($primaryDesk, 10%);
+        color: $white;
+      }
+    }
+  }
+
+}
+
+@include media-query(desk) {
+.main-nav {
+  .btn {
+    background-color: $primaryPalm;
+
+    &:hover {
+      background-color: lighten($primaryDesk, 10%);
+    }
+  }
+}
+
+
+
+}

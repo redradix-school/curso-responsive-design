@@ -1,0 +1,575 @@
+// -------------------------------------
+//   FUNCTIONS
+// -------------------------------------
+
+// ----- em ----- //
+//EM conversor
+  // use:
+  // .element{
+  //   height: em(50, 16);
+  // }
+  // First value is the desired font-size (in pixels)
+  // Second value is the context (parent) font-size; default size is base font-size
+  @function em($target, $context: $font-base){
+    @if ($target == 0){
+      @return 0;
+    }
+    @else{
+      @return #{$target / $context}em;
+    }
+  }
+
+
+
+// ----- rem ----- //
+//REM conversor
+  // use:
+  //  .element {
+  //    height: rem(50);
+  //   }
+  // Value equals desired font-size in pixels
+  @function rem($size){
+    @return #{$size / $font-base}rem;
+  }
+
+
+
+
+
+// -------------------------------------
+//    MIXINS
+// -------------------------------------
+
+// -------------------------------------
+//    remSize: Sizes in rems with fallback for pixels
+// -------------------------------------
+// use:
+//  .element {
+//    @include rem('border', 1 solid red);
+//    @include rem('padding', 10 20 10);
+//  }
+    @mixin remSize($property, $values) {
+      // If there is only one (numeric) value, return the property/value line for it.
+      @if type-of($values) == "number" {
+        #{$property}: $values + px;
+        #{$property}: rem($values);}
+
+      @else {
+        // Create an empty list that we can dump values into
+        $rem-values: unquote("");
+        $px-values: unquote("");
+        @each $value in $values {
+          // If the value is zero or a string or a color, return unchanged input
+          @if $value == 0 or type-of($value) == "string" or type-of($value) == "color" {
+            $px-values: append($px-values, $value);
+            $rem-values: append($rem-values, $value);
+          }
+          @else {
+            $convert-rem: rem($value);
+            $convert-px: $value + px;
+            $rem-values: append($rem-values, $convert-rem);
+            $px-values: append($px-values, $convert-px); } }
+        // Return the property and its list of converted values
+        #{$property}: $px-values;
+        #{$property}: $rem-values;
+
+      }
+
+    }
+
+
+// -------------------------------------
+//   font-face
+// -------------------------------------
+// Use:
+// @include font-face('Gotham', 'GothaHTFLig', 200);
+// Choose the version  based on web browser support needed for your project:
+  //COMPLETE SUPPORT VERSION
+    @mixin font-face-complete($font-family, $font-filename, $font-weight : normal, $font-style :normal, $font-stretch : normal) {
+      @font-face {
+        font-family: "#{$font-family}";
+        src:  url("../fonts/#{$font-filename}.eot"); //IE9 Compat Modes
+        src:  url("../fonts/#{$font-filename}.eot?#iefix") format("embedded-opentype"), //IE6-IE8
+              url("../fonts/#{$font-filename}.woff2") format("woff2"), //Super Modern Browsers
+              url("../fonts/#{$font-filename}.woff") format("woff"), //Pretty Modern Browsers
+              url("../fonts/#{$font-filename}.ttf") format("truetype"), //Safari, Android 2.2+, iOS
+              url("../fonts/#{$font-filename}.svg##{$font-family}") format("svg"); //Legacy iOS
+        font-weight: $font-weight;
+        font-style: $font-style;
+        font-stretch: $font-stretch;
+      }
+    }
+
+  //MODERN SUPPORT VERSION
+  @mixin font-face-modern($font-family, $font-filename, $font-weight : normal, $font-style :normal, $font-stretch : normal) {
+    @font-face {
+      font-family: "#{$font-family}";
+      src:  url("../fonts/#{$font-filename}.woff2") format("woff2"), //Chrome 26+, Opera 23+
+            url("../fonts/#{$font-filename}.woff") format("woff"); //Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+, Andorid 4.4
+      font-weight: $font-weight;
+      font-style: $font-style;
+      font-stretch: $font-stretch;
+    }
+  }
+
+
+  //SIMPLE VERSION
+  @mixin font-face($font-family, $font-filename, $font-weight : normal, $font-style :normal, $font-stretch : normal) {
+    @font-face {
+      font-family: "#{$font-family}";
+      src:  url("../fonts/#{$font-filename}.woff") format("woff"), //Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+, Android 4.4
+            url("../fonts/#{$font-filename}.ttf") format("truetype"); //Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5, Android 2.2+,
+      font-weight: $font-weight;
+      font-style: $font-style;
+      font-stretch: $font-stretch;
+    }
+  }
+
+
+
+
+
+// -------------------------------------
+//   font-size to rems
+// -------------------------------------
+// Use:
+// @include font-size(20);
+  @mixin font-size($sizeValue: 16 ) {
+    font-size: $sizeValue + px;
+    font-size: ($sizeValue / $font-base) + rem;
+  }
+
+// -------------------------------------
+//   prefixer
+// -------------------------------------
+// Please, try not to use this mixin, better use autoprefixer!
+// https://github.com/postcss/autoprefixer#usage
+// Use:
+// @include prefixer( transform, translateX(0) );
+  @mixin prefixer ($property, $value:null,
+                 $webkit: true,
+                    $moz: true,
+                     $ms: true,
+                      $o: true,
+                   $spec: true) {
+  @if $value{
+    @if $webkit { -webkit-#{$property}: $value; }
+    @if $moz    {    -moz-#{$property}: $value; }
+    @if $ms     {     -ms-#{$property}: $value; }
+    @if $o      {      -o-#{$property}: $value; }
+    @if $spec   {         #{$property}: $value; }
+  }
+}
+
+
+// -------------------------------------
+//   box-sizing
+// -------------------------------------
+// use:
+// @include box-sizing(border-box);
+
+  @mixin box-sizing($box-model) {
+    -webkit-box-sizing: $box-model;  // Safari <= 5
+       -moz-box-sizing: $box-model;  // Firefox <= 19
+            box-sizing: $box-model;
+  }
+
+
+
+// -------------------------------------
+//   clearfix
+// -------------------------------------
+// use: @include clearfix;
+
+  @mixin clearfix(){
+    &:after{
+      clear: both;
+      content: '';
+      display: table;
+    }
+  }
+
+// ------------------------------------------
+//  Opacity
+// ------------------------------------------
+// Use:
+// @include opacity(0.8);
+
+  @mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie); //IE8
+  }
+
+
+// ------------------------------------------
+//   Accesible & seo-friendly hidden content
+// ------------------------------------------
+// Try this first: @extend %reader-only;
+// use: @include hide-content;
+
+  @mixin hide-content {
+    display: table;
+    text-indent:100%;
+    white-space:nowrap;
+    overflow: hidden;
+  }
+
+
+// -------------------------------------
+//   vertical and centered align boxes
+// -------------------------------------
+// Note: Webkit doesn't support  this if position: relative;
+// use: @include vertical-align();
+// use: @include centered();
+
+  @mixin vertical-align ($position: absolute) {
+    position: $position;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  @mixin centered ($position: absolute) {
+    position: $position;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+// -------------------------------------
+// Shorthand position
+// -------------------------------------
+/// use:
+///   .foo {
+///     @include position(absolute, $top: 10px, $left: 10px);
+///   }
+/// Result:
+///   .foo {
+///     position: absolute;
+///     left: 10px;
+///     top: 10px;
+///   }
+@mixin position($type, $top: null, $right: null, $bottom: null, $left: null) {
+    position: $type;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}
+
+// -------------------------------------
+//   Box Shadow
+// -------------------------------------
+// Use:
+// @include box-shadow(0 4px 4px -5px black inset);
+  @mixin box-shadow( $value ){
+    -webkit-box-shadow: $value;
+    -moz-box-shadow: $value;
+    box-shadow: $value;
+  }
+
+
+// -------------------------------------
+//   Text Shadow
+// -------------------------------------
+// Use:
+// @include text-shadow(0 1px 2px black);
+  @mixin text-shadow( $value ){
+    -webkit-text-shadow: $value;
+    -moz-text-shadow: $value;
+    text-shadow: $value;
+  }
+
+
+// -------------------------------------
+//   Border radius
+// -------------------------------------
+// Use:
+// @include border-radius(50%);
+ @mixin border-radius ( $value: 4px ) {
+  -webkit-border-radius: $value;
+  -moz-border-radius: $value;
+  border-radius: $value;
+
+  // keeps background from busting out of border
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  }
+
+
+// -------------------------------------
+//   Gradients
+// -------------------------------------
+// First value: origin color
+// Second value: end color
+// Third value: direction
+// Use:
+// @include gradient(white, black, left);
+
+@mixin gradient($fromColor, $toColor, $direction: bottom ) {
+  background-color:$fromColor;
+  background-image: linear-gradient(to $direction, $fromColor 0%, $toColor 100%);
+}
+
+// -------------------------------------
+//   Transitions
+// -------------------------------------
+// use:
+// a {
+//   color: gray;
+//   @include transition(color .3s ease);
+//   &:hover {
+//     color: black;
+//   }
+// }
+// -------------------------------------
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+
+// -------------------------------------
+//   Transforms
+// -------------------------------------
+// Use:
+// @include transform(translateX(25px));
+
+// generic transform
+@mixin transform($transforms) {
+     -moz-transform: $transforms;
+       -o-transform: $transforms;
+      -ms-transform: $transforms;
+  -webkit-transform: $transforms;
+          transform: $transforms;
+}
+// rotate
+@mixin rotate ($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+
+// scale
+@mixin scale($scale) {
+   @include transform(scale($scale));
+}
+// translate
+@mixin translate ($x, $y) {
+   @include transform(translate($x, $y));
+}
+// skew
+@mixin skew ($x, $y) {
+   @include transform(skew(#{$x}deg, #{$y}deg));
+}
+//transform origin
+@mixin transform-origin ($origin) {
+    moz-transform-origin: $origin;
+       -o-transform-origin: $origin;
+      -ms-transform-origin: $origin;
+  -webkit-transform-origin: $origin;
+          transform-origin: $origin;
+}
+
+
+// -------------------------------------
+//   CSS3 ANIMATIONS
+// -------------------------------------
+// Use:
+// @include keyframes(slide-down) {
+//   0% { opacity: 1; }
+//   90% { opacity: 0; }
+// }
+
+// .element {
+//   width: 100px;
+//   height: 100px;
+//   background: black;
+//   @include animation('slide-down 5s 3');
+// }
+@mixin keyframes($animation-name) {
+    @-webkit-keyframes #{$animation-name} {
+        @content;
+    }
+    @-moz-keyframes #{$animation-name} {
+        @content;
+    }
+    @-ms-keyframes #{$animation-name} {
+        @content;
+    }
+    @-o-keyframes #{$animation-name} {
+        @content;
+    }
+    @keyframes #{$animation-name} {
+        @content;
+    }
+}
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  -o-animation: #{$str};
+  animation: #{$str};
+}
+
+
+// -------------------------------------
+// Forces browsers to use hardware acceleration for transforms
+// -------------------------------------
+// Use:
+//   .foo {
+//     @include ha;
+//   }
+@mixin ha {
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+
+// -------------------------------------
+//   inline-block
+// -------------------------------------
+
+  @mixin inline-block() {
+    display: inline-block;
+    letter-spacing: normal;
+    word-spacing: normal;
+    vertical-align: top;
+  }
+
+
+// -------------------------------------
+//   Inline-block fix
+// -------------------------------------
+// Solution to avoid those annoying white spaces between inline-block elements, mainly cols
+
+@mixin inline-block-fix {
+  font-size: 0;
+  > * {
+    @include font-size($font-base);
+  }
+}
+
+
+// -------------------------------------
+//   SVG
+// -------------------------------------
+
+// The SVG mixin creates a placeholder and a class with the supplied $name.
+// The placeholder expects images to be under images/icons/svg and images/icons/png
+// The last two arguments are optional
+// @include svg($name, $file_name, $width, $height);
+
+@mixin svg($name, $file_name, $w:null, $h:null){
+    %ico-#{$name}{
+      background-image: image_url("icons/svg/#{$file_name}.svg");
+    .no-svg &{
+      background-image: image_url("icons/png/#{$file_name}.png");
+    }
+}
+
+  .ico-#{$name} {
+    @extend %ico-#{$name};
+    background-repeat:no-repeat;
+    @if $w{ width:$w; }
+    @if $h{ height:$h; }
+  }
+}
+
+
+// -------------------------------------
+//   Media queries
+// -------------------------------------
+
+// Use:
+// @include media-query(palm) {
+//   background: red;
+// }
+
+
+@mixin media-query($media-query) {
+
+    @if $media-query == palm {
+
+        @media only screen and ( max-width: em($palm-end, 16) ) { @content; }
+
+    }
+
+    @if $media-query == lap {
+
+        @media only screen and (min-width: em($lap-start, 16) ) and (max-width: em($lap-end)) { @content; }
+
+    }
+
+    @if $media-query == lap-and-up {
+
+        @media only screen and (min-width: em($lap-start, 16) ) { @content; }
+
+    }
+
+    @if $media-query == portable {
+
+        @media only screen and (max-width: em($lap-end, 16) ) { @content; }
+
+    }
+
+    @if $media-query == desk {
+
+        @media only screen and (min-width: em($desk-start, 16) ) { @content; }
+
+    }
+
+    @if $media-query == desk-wide {
+
+        @media only screen and (min-width: em($desk-wide-start, 16) ) { @content; }
+
+    }
+
+    @if $media-query == hi-res {
+
+        @media only screen and (min--moz-device-pixel-ratio: 1.3),
+          (-o-min-device-pixel-ratio: 2.6/2),
+          (-webkit-min-device-pixel-ratio: 1.3),
+          (min-device-pixel-ratio: 1.3),
+          (min-resolution: 1.3dppx) { @content; }
+
+    }
+
+    //Video Queries
+    @if $media-query == video-small {
+        @media only screen and (min-width: em($video-small, 16) ) { @content; }
+    }
+    @if $media-query == video-med {
+        @media only screen and (min-width: em($video-med, 16) ) { @content; }
+    }
+    @if $media-query == video-big {
+        @media only screen and (min-width: em($video-big, 16) ) { @content; }
+    }
+    @if $media-query == video-huge {
+        @media only screen and (min-width: em($video-huge, 16) ) { @content; }
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

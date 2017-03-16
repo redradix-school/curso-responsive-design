@@ -1,0 +1,121 @@
+/* Tables */
+
+.table-wrapper {
+  @include remSize('padding', $pad);
+  overflow: auto;
+  table {
+    //table-layout: fixed;
+    width: 100%;
+
+  }
+    tbody tr:nth-child(even) {
+      background: $white;
+    }
+
+    th, td {
+      @include remSize('padding', $padHalf);
+    }
+    th {
+      color: $black;
+    }
+
+
+
+}
+
+
+
+
+/* Responsive table */
+.table-wrapper-alternate {
+  table, tbody, thead, tr, td, th {
+    display: block;
+  }
+  thead {
+    display: none;
+  }
+ tr {
+  @include remSize('padding', $padHalf);
+  @include remSize('margin-bottom', $pad);
+  @include clearfix;
+  background: $white;
+  border-bottom: 3px solid lighten($grayLight, 33%);
+
+ }
+  td {
+    float: left;
+    width: 50%;
+
+    &:first-child {
+      width: 100%;
+    }
+  }
+}
+
+@include media-query(lap-and-up) {
+.table-wrapper-alternate {
+  background: $grayUltraLight;
+  table, tbody, thead, tr, td, th {
+    display: initial;
+  }
+  table {
+    display: table;
+  }
+  thead {
+    display: table-header-group;
+  }
+  tbody {
+    display: table-row-group;
+  }
+  tr {
+    display: table-row;
+    float: none;
+    background: transparent;
+    border: 0 none;
+    margin: 0;
+    padding: 0;
+  }
+  td, th {
+    display: table-cell;
+    width: auto;
+    float: none;
+  }
+}
+
+
+}
+
+
+
+
+/* LIST TABLE */
+
+.table-list-wrapper {
+  @include remSize('padding', $pad);
+  @include remSize('margin', $pad);
+  background: $grayUltraLight;
+
+  .table-list {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  .table-row {
+    display: table-row;
+
+    &:nth-child(odd) {
+      background: $white;
+    }
+    &.table-header {
+      font-weight: bold;
+      color: $black;
+      background: transparent;
+    }
+  }
+    .table-cell {
+      @include remSize('padding', $padHalf);
+      display: table-cell;
+    }
+
+
+}

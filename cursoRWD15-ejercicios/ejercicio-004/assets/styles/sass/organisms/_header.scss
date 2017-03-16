@@ -1,0 +1,93 @@
+/* Header */
+
+  .main-header {
+    @include clearfix;
+    @include transition(all 0.3s ease);
+    background-color: $primary;
+    color: $white;
+    padding: 0;
+
+
+    .title {
+      @include remSize('padding', $padHalf 56 $padHalf $padHalf);
+      @include remSize('height', 50);
+      @include position(absolute, 0, 0, 0, 0);
+      width: 100%;
+      background-color: $primary;
+      color: $white;
+      margin: 0;
+
+      &:after {
+        @include remSize('margin-left', $pad);
+        content: 'small';
+      }
+
+    }
+
+      .wrapper {
+        @include clearfix;
+        padding: 0;
+
+      }
+
+      .menu-trigger {
+        @include remSize('width', 48);
+        @include remSize('height', 48);
+        @include remSize('line-height', 48);
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        cursor: pointer;
+      }
+
+}
+
+
+
+
+
+/* Media Queries */
+@include media-query(lap-and-up) {
+    /* Header*/
+    .main-header {
+      @include remSize('height', 180);
+      @include remSize('padding', $pad);
+      background-color: $primaryPalm;
+
+      .title {
+          @include remSize('margin', $pad 0);
+          @include font-size(32);
+          background: transparent;
+          position: static;
+
+          &:after {
+            content: 'medium';
+          }
+
+        }
+
+      .menu-trigger {
+        display: none;
+      }
+
+    }
+
+
+}
+
+@include media-query(desk) {
+    /* Header */
+    .main-header {
+      background-color: $primaryDesk;
+
+      .title:after {
+        content: 'big';
+      }
+
+    }
+
+
+
+
+}
